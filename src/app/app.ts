@@ -19,18 +19,19 @@ type Loading = 'video' | 'transcript' | null;
 export class App {
   private readonly api = inject(TranscriptApi);
 
-  protected readonly trackKindLabel = TRACK_KIND_LABEL;
-  protected readonly url = signal('');
-  protected readonly video = signal<VideoInfo | null>(null);
-  protected readonly selectedTrackId = signal<string | null>(null);
-  protected readonly cues = signal<Cue[] | null>(null);
-  protected readonly loading = signal<Loading>(null);
-  protected readonly error = signal<string | null>(null);
-  protected readonly includeTimestamps = signal(true);
-  protected readonly copied = signal(false);
+  readonly trackKindLabel = TRACK_KIND_LABEL;
+  readonly url = signal('');
+  readonly video = signal<VideoInfo | null>(null);
+  readonly selectedTrackId = signal<string | null>(null);
+  readonly cues = signal<Cue[] | null>(null);
+  readonly loading = signal<Loading>(null);
+  readonly error = signal<string | null>(null);
+  readonly includeTimestamps = signal(true);
+  readonly copied = signal(false);
 
   /** 送出的網址；字幕軌改選時沿用，避免使用者已修改輸入框 */
   private submittedUrl = '';
+
   /** 只採用最新一次請求的結果 */
   private requestId = 0;
   private copiedTimer?: ReturnType<typeof setTimeout>;
@@ -41,25 +42,31 @@ export class App {
   }));
 
   /** 畫面上一律顯示時間戳；開關只影響複製與下載 */
-  protected readonly displayLines = computed(() =>
+  readonly displayLines = computed(() =>
     transcriptLines(this.cues() ?? [], { ...this.lineOptions(), includeTimestamps: true }),
   );
 
-  protected readonly selectedTrack = computed(() =>
+  readonly selectedTrack = computed(() =>
     this.video()?.tracks.find((track) => track.id === this.selectedTrackId()),
   );
 
-  protected async submit(event: Event) {
+  /**
+   * 取得影片資訊並重設先前結果；有預設字幕軌時接著載入逐字稿，載入影片期間忽略重複送出
+   * @param event 提交事件
+   */
+  async submit(event: Event) {
     event.preventDefault();
     const url = this.url().trim();
     if (!url || this.loading() === 'video') return;
     const id = ++this.requestId;
+
     this.submittedUrl = url;
     this.video.set(null);
     this.cues.set(null);
     this.selectedTrackId.set(null);
     this.error.set(null);
     this.loading.set('video');
+
     try {
       const video = await this.api.getVideo(url);
       if (id !== this.requestId) return;
@@ -73,7 +80,10 @@ export class App {
     }
   }
 
-  protected async selectTrack(trackId: string) {
+  /**
+   * 載入指定字幕軌的逐字稿；使用送出時的網址，而非輸入框目前的內容
+   */
+  async selectTrack(trackId: string) {
     const id = ++this.requestId;
     this.selectedTrackId.set(trackId);
     this.cues.set(null);
@@ -91,14 +101,20 @@ export class App {
     }
   }
 
-  protected async copyAll() {
+  /**
+   * 依時間戳設定複製全部逐字稿，並顯示「已複製」提示 2 秒；連續點擊會重新計時
+   */
+  async copyAll() {
     await navigator.clipboard.writeText(copyText(this.cues() ?? [], this.lineOptions()));
     this.copied.set(true);
     clearTimeout(this.copiedTimer);
     this.copiedTimer = setTimeout(() => this.copied.set(false), 2000);
   }
 
-  protected download() {
+  /**
+   * 依時間戳設定將逐字稿下載為 UTF-8 的 .txt 檔；尚未選定影片或字幕軌時不動作
+   */
+  download() {
     const video = this.video();
     const track = this.selectedTrack();
     if (!video || !track) return;
