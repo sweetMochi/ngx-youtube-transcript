@@ -47,6 +47,28 @@ export const TRACK_KIND_LABEL: Record<TrackKind, string> = {
   auto: '自動字幕',
 };
 
+/** 字幕軌選單需要的字幕軌資訊 */
+export interface TrackOption {
+  id: string;
+  language: string;
+  languageName: string;
+  kind: TrackKind;
+}
+
+/** 字幕軌選單的選項文字（以 track id 對應）：「<語言名稱>・<種類>」，與其他字幕軌相同時才在語言名稱後補上（<語言代碼>） */
+export function trackOptionLabels(tracks: TrackOption[]): Record<string, string> {
+  const plain = tracks.map((track) => `${track.languageName}・${TRACK_KIND_LABEL[track.kind]}`);
+  return Object.fromEntries(
+    tracks.map((track, i) => {
+      const duplicated = plain.indexOf(plain[i]) !== plain.lastIndexOf(plain[i]);
+      const label = duplicated
+        ? `${track.languageName}（${track.language}）・${TRACK_KIND_LABEL[track.kind]}`
+        : plain[i];
+      return [track.id, label];
+    }),
+  );
+}
+
 /** txt 檔內容：標題、網址、字幕軌三行檔頭，空一行後接字幕；LF 換行 */
 export function txtContent(source: TranscriptSource, cues: Cue[], includeTimestamps: boolean) {
   const header = [

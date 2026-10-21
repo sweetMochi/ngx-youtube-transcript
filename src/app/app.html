@@ -38,7 +38,7 @@
             >
               @for (track of video.tracks; track track.id) {
                 <option [value]="track.id" [selected]="track.id === selectedTrackId()">
-                  {{ track.languageName }}（{{ track.language }}）・{{ trackKindLabel[track.kind] }}
+                  {{ trackLabels()[track.id] }}
                 </option>
               }
             </select>

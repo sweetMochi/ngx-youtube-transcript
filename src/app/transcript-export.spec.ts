@@ -1,4 +1,10 @@
-import { copyText, transcriptLines, txtContent, txtFileName } from './transcript-export';
+import {
+  copyText,
+  trackOptionLabels,
+  transcriptLines,
+  txtContent,
+  txtFileName,
+} from './transcript-export';
 
 describe('transcriptLines', () => {
   const cues = [
@@ -151,5 +157,48 @@ describe('txtFileName', () => {
   it('字幕軌語言帶有後綴時照原樣放入檔名', () => {
     const lex = { ...source, track: { language: 'en-ehkg1hFWq8A', kind: 'manual' as const } };
     expect(txtFileName(lex)).toMatch(/\[dQw4w9WgXcQ\]\.en-ehkg1hFWq8A\.txt$/);
+  });
+});
+
+describe('trackOptionLabels', () => {
+  const track = (language: string, languageName: string, kind: 'manual' | 'auto') => ({
+    id: `${kind}:${language}`,
+    language,
+    languageName,
+    kind,
+  });
+
+  it('沒有重複時，不顯示語言代碼', () => {
+    const tracks = [
+      track('en-j3PyPqV-e1s', 'English - CC (English)', 'manual'),
+      track('en', 'English', 'auto'),
+    ];
+    expect(trackOptionLabels(tracks)).toEqual({
+      'manual:en-j3PyPqV-e1s': 'English - CC (English)・人工字幕',
+      'auto:en': 'English・自動字幕',
+    });
+  });
+
+  it('有重複時，只有重複的那幾軌補上語言代碼', () => {
+    const tracks = [
+      track('en-j3PyPqV-e1s', 'English - CC (English)', 'manual'),
+      track('en', 'English', 'auto'),
+      track('en-AbC', 'English', 'manual'),
+      track('en-XyZ', 'English', 'manual'),
+    ];
+    expect(trackOptionLabels(tracks)).toEqual({
+      'manual:en-j3PyPqV-e1s': 'English - CC (English)・人工字幕',
+      'auto:en': 'English・自動字幕',
+      'manual:en-AbC': 'English（en-AbC）・人工字幕',
+      'manual:en-XyZ': 'English（en-XyZ）・人工字幕',
+    });
+  });
+
+  it('languageName 相同但種類不同時，不算重複', () => {
+    const tracks = [track('en', 'English', 'manual'), track('en', 'English', 'auto')];
+    expect(trackOptionLabels(tracks)).toEqual({
+      'manual:en': 'English・人工字幕',
+      'auto:en': 'English・自動字幕',
+    });
   });
 });
