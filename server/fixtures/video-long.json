@@ -1,0 +1,38 @@
+{
+  "id": "L_Guz73e6fw",
+  "title": "Sam Altman: OpenAI CEO on GPT-4, ChatGPT, and the Future of AI | Lex Fridman Podcast #367",
+  "webpage_url": "https://www.youtube.com/watch?v=L_Guz73e6fw",
+  "duration": 8636,
+  "subtitles": {
+    "en-ehkg1hFWq8A": [
+      {
+        "ext": "json3",
+        "url": "https://www.youtube.com/api/timedtext?v=L_Guz73e6fw&ei=bOjYatHrHoWw2roP5tnWIQ&caps=asr&opi=112496729&xoaf=1&xoadf=4&xowf=1&hl=en&ip=0.0.0.0&ipbits=0&expire=1792625372&sparams=ip%2Cipbits%2Cexpire%2Cv%2Cei%2Ccaps%2Copi%2Cxoaf%2Cxoadf&signature=A9CE23267729953E66FFBA5991F2864281DDD3C3.0505AA9135E28C92E3DD96A5D8D36E05CBD1CA04&key=yt8&lang=en&name=Default&fmt=json3",
+        "name": "English - Default"
+      }
+    ]
+  },
+  "automatic_captions": {
+    "en": [
+      {
+        "ext": "json3",
+        "url": "https://www.youtube.com/api/timedtext?v=L_Guz73e6fw&ei=bOjYatHrHoWw2roP5tnWIQ&caps=asr&opi=112496729&xoaf=1&xoadf=4&xowf=1&hl=en&ip=0.0.0.0&ipbits=0&expire=1792625372&sparams=ip%2Cipbits%2Cexpire%2Cv%2Cei%2Ccaps%2Copi%2Cxoaf%2Cxoadf&signature=A9CE23267729953E66FFBA5991F2864281DDD3C3.0505AA9135E28C92E3DD96A5D8D36E05CBD1CA04&key=yt8&kind=asr&lang=en&fmt=json3",
+        "name": "English"
+      }
+    ],
+    "en-orig": [
+      {
+        "ext": "json3",
+        "url": "https://www.youtube.com/api/timedtext?v=L_Guz73e6fw&ei=bOjYatHrHoWw2roP5tnWIQ&caps=asr&opi=112496729&xoaf=1&xoadf=4&xowf=1&hl=en&ip=0.0.0.0&ipbits=0&expire=1792625372&sparams=ip%2Cipbits%2Cexpire%2Cv%2Cei%2Ccaps%2Copi%2Cxoaf%2Cxoadf&signature=A9CE23267729953E66FFBA5991F2864281DDD3C3.0505AA9135E28C92E3DD96A5D8D36E05CBD1CA04&key=yt8&kind=asr&lang=en&fmt=json3",
+        "name": "English (Original)"
+      }
+    ],
+    "zh-Hant": [
+      {
+        "ext": "json3",
+        "url": "https://www.youtube.com/api/timedtext?v=L_Guz73e6fw&ei=bOjYatHrHoWw2roP5tnWIQ&caps=asr&opi=112496729&xoaf=1&xoadf=4&xowf=1&hl=en&ip=0.0.0.0&ipbits=0&expire=1792625372&sparams=ip%2Cipbits%2Cexpire%2Cv%2Cei%2Ccaps%2Copi%2Cxoaf%2Cxoadf&signature=A9CE23267729953E66FFBA5991F2864281DDD3C3.0505AA9135E28C92E3DD96A5D8D36E05CBD1CA04&key=yt8&kind=asr&lang=en&tlang=zh-Hant&fmt=json3",
+        "name": "Chinese (Traditional)"
+      }
+    ]
+  }
+}

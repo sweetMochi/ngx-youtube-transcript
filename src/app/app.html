@@ -1,0 +1,82 @@
+<main>
+  <h1>YouTube 逐字稿</h1>
+
+  <form class="search" (submit)="submit($event)">
+    <input
+      #urlInput
+      type="url"
+      placeholder="貼上 YouTube 影片網址"
+      aria-label="YouTube 影片網址"
+      required
+      [value]="url()"
+      (input)="url.set(urlInput.value)"
+    />
+    <button type="submit" [disabled]="loading() === 'video'">取得字幕</button>
+  </form>
+
+  @if (loading() === 'video') {
+    <p class="status" role="status">正在讀取影片資訊…</p>
+  }
+  @if (error()) {
+    <p class="error" role="alert">{{ error() }}</p>
+  }
+
+  @if (video(); as video) {
+    <section>
+      <h2>{{ video.title }}</h2>
+
+      @if (video.tracks.length === 0) {
+        <p class="notice" role="status">這支影片沒有可用的字幕</p>
+      } @else {
+        <div class="toolbar">
+          <label>
+            字幕軌
+            <select
+              #trackSelect
+              [disabled]="loading() === 'transcript'"
+              (change)="selectTrack(trackSelect.value)"
+            >
+              @for (track of video.tracks; track track.id) {
+                <option [value]="track.id" [selected]="track.id === selectedTrackId()">
+                  {{ track.languageName }}（{{ track.language }}）・{{ trackKindLabel[track.kind] }}
+                </option>
+              }
+            </select>
+          </label>
+          <label class="checkbox">
+            <input
+              #timestampToggle
+              type="checkbox"
+              [checked]="includeTimestamps()"
+              (change)="includeTimestamps.set(timestampToggle.checked)"
+            />
+            包含時間戳
+          </label>
+          <span class="actions">
+            <button type="button" [disabled]="!cues()?.length" (click)="copyAll()">
+              {{ copied() ? '已複製' : '複製全部' }}
+            </button>
+            <button type="button" [disabled]="!cues()?.length" (click)="download()">
+              下載 txt
+            </button>
+          </span>
+        </div>
+
+        @if (loading() === 'transcript') {
+          <p class="status" role="status">正在讀取字幕…</p>
+        }
+        @if (cues(); as cues) {
+          @if (cues.length === 0) {
+            <p class="notice" role="status">這個字幕軌沒有內容，請改選其他字幕軌</p>
+          } @else {
+            <ol class="transcript">
+              @for (line of displayLines(); track $index) {
+                <li>{{ line }}</li>
+              }
+            </ol>
+          }
+        }
+      }
+    </section>
+  }
+</main>
