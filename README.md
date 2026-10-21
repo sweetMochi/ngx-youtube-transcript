@@ -22,6 +22,31 @@ npm start
 
 抓取失敗時，最常見的原因是 yt-dlp 版本太舊，請先更新 yt-dlp
 
+## 架構
+
+```mermaid
+flowchart LR
+  subgraph local["本機"]
+    browser["瀏覽器<br>Angular 前端"]
+    web["web：Angular dev server<br>127.0.0.1:4200"]
+    api["api：本地 API<br>127.0.0.1:3000"]
+    ytdlp["yt-dlp<br>＋ JS runtime（Deno）"]
+  end
+  youtube(["YouTube"])
+
+  browser -- "頁面與 /api 請求" --> web
+  web -- "轉發 /api" --> api
+  api -- "子行程呼叫" --> ytdlp
+  ytdlp -- "取得影片資訊與字幕" --> youtube
+```
+
+所有元件都在本機執行，只有 yt-dlp 會連到 YouTube。前端取得一份逐字稿會依序呼叫兩支 API：
+
+1. `GET /api/video?url=…`：以 `yt-dlp -J` 讀取影片標題、長度與字幕軌清單，並挑出預設字幕軌（人工字幕優先）
+2. `GET /api/transcript?url=…&track=…`：以 yt-dlp 將指定字幕軌下載成 json3 到暫存目錄，解析成「時間戳＋文字」後回傳，再刪除暫存檔
+
+切換字幕軌時只會重新呼叫第 2 支 API。「複製全部」與「下載 txt」都在瀏覽器端完成，不經過後端
+
 ## 開發
 
 ```sh
