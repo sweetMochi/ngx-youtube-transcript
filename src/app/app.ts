@@ -1,8 +1,8 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { TranscriptApi, errorMessage, type VideoInfo } from './transcript-api';
 import {
-  TRACK_KIND_LABEL,
   copyText,
+  trackOptionLabels,
   transcriptLines,
   txtContent,
   txtFileName,
@@ -19,7 +19,6 @@ type Loading = 'video' | 'transcript' | null;
 export class App {
   private readonly api = inject(TranscriptApi);
 
-  readonly trackKindLabel = TRACK_KIND_LABEL;
   readonly url = signal('');
   readonly video = signal<VideoInfo | null>(null);
   readonly selectedTrackId = signal<string | null>(null);
@@ -45,6 +44,8 @@ export class App {
   readonly displayLines = computed(() =>
     transcriptLines(this.cues() ?? [], { ...this.lineOptions(), includeTimestamps: true }),
   );
+
+  readonly trackLabels = computed(() => trackOptionLabels(this.video()?.tracks ?? []));
 
   readonly selectedTrack = computed(() =>
     this.video()?.tracks.find((track) => track.id === this.selectedTrackId()),
