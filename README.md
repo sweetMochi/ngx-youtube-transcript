@@ -1,4 +1,4 @@
-# ngx-youtube-transcript
+# youtube-transcript-viewer
 
 在本機執行的 YouTube 逐字稿檢視器。貼上影片網址，透過 yt-dlp 取得字幕，以「時間戳＋文字」逐行顯示，可以複製全部或下載成 txt
 
@@ -66,4 +66,4 @@ npm run build     # 前端正式建置
 - `server/fixtures/`：測試用的 yt-dlp 輸出，來源見該目錄的 README
 - `src/app/transcript-export.ts`：畫面、複製與下載共用的逐字稿輸出邏輯
 
-完整規格見 [Issue #1](https://github.com/sweetMochi/ngx-youtube-transcript/issues/1)
+完整規格見 [Issue #1](https://github.com/sweetMochi/youtube-transcript-viewer/issues/1)

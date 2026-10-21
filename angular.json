@@ -6,7 +6,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "ngx-youtube-transcript": {
+    "youtube-transcript-viewer": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -54,10 +54,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "ngx-youtube-transcript:build:production"
+              "buildTarget": "youtube-transcript-viewer:build:production"
             },
             "development": {
-              "buildTarget": "ngx-youtube-transcript:build:development"
+              "buildTarget": "youtube-transcript-viewer:build:development"
             }
           },
           "defaultConfiguration": "development",

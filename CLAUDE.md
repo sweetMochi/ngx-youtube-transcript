@@ -2,7 +2,7 @@
 
 ### Issue tracker
 
-Issues and specs are tracked in GitHub Issues for sweetMochi/ngx-youtube-transcript, via the `gh` CLI. See `docs/agents/issue-tracker.md`.
+Issues and specs are tracked in GitHub Issues for sweetMochi/youtube-transcript-viewer, via the `gh` CLI. See `docs/agents/issue-tracker.md`.
 
 ### Triage labels
 

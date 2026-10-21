@@ -26,7 +26,7 @@ export async function getTranscript(
   if (!match) throw noSuchTrack();
   const [, kind, language] = match;
 
-  const dir = await mkdtemp(join(tmpdir(), 'ngx-youtube-transcript-'));
+  const dir = await mkdtemp(join(tmpdir(), 'youtube-transcript-viewer-'));
   try {
     await runOrThrow(runYtDlp, [
       '--skip-download',
