@@ -10,7 +10,8 @@
     "test": "npm run test:api && npm run test:web",
     "test:api": "node --test \"server/**/*.test.ts\"",
     "test:web": "ng test --watch=false",
-    "typecheck": "tsc -p server"
+    "typecheck": "tsc -p server",
+    "format": "prettier --write ."
   },
   "private": true,
   "packageManager": "npm@11.19.0",
