@@ -2,6 +2,13 @@
 
 在本機執行的 YouTube 逐字稿檢視器。貼上影片網址，透過 yt-dlp 取得字幕，以「時間戳＋文字」逐行顯示，可以複製全部或下載成 txt
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/main-dark.png">
+  <img src="docs/images/main-light.png" alt="主畫面：貼上網址後顯示字幕軌選單與帶時間戳的逐字稿">
+</picture>
+
+<sub>範例影片：[What's new in Angular](https://www.youtube.com/watch?v=MbkjTNg2rcg)（創用 CC 授權）</sub>
+
 ## 需求
 
 - Node.js 24 以上（後端直接執行 TypeScript）
